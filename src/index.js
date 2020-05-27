@@ -6,16 +6,17 @@ const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
 const User = require('./models/user');
+const channels = require('./routes/channels');
 
 app.use(express.json());
 
 const client = require('./client/client');
 app.use('/', client);
 
-const channels = require('./routes/channels');
 app.use('/channels', channels);
 
 io.on('connection', async socket => {
+  // TODO move to a separate handler
   console.log('User connected', socket.handshake.query.username);
   let user;
   if (socket.handshake.query.username) {
@@ -43,7 +44,7 @@ io.on('connection', async socket => {
     if (!msgData.text.trim()) {
       return;
     }
-    io.to(msgData.channelId).emit('chatMessage', msgData.text);
+    io.to(msgData.channelId).emit('chatMessage', { text: msgData.text, sender: user && user.username || 'anonymous' });
   });
 
   socket.on('joinChannel', channelId => {

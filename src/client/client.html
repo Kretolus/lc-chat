@@ -37,6 +37,9 @@
 <script>
   const socket = io();
   let activeChannel;
+  let logMessage = (message) => {
+    console.log(`Message from: ${message.sender}`, `Text: ${message.text}`)
+  }
   $('#postMessage').submit(function(e) {
     e.preventDefault(); // prevents page reloading
     socket.emit('chatMessage', { channelId: activeChannel, text: $('#messsageText').val() });
@@ -44,7 +47,8 @@
     return false;
   });
   socket.on('chatMessage', function(msg){
-    $('#messages').append($('<li>').text(msg));
+    $('#messages').append($('<li>').text(`${msg.sender}: ${msg.text}`));
+    logMessage(msg);
   });
 
   $('#channelCreate').submit(function(e) {
