@@ -1,0 +1,17 @@
+{
+  "name": "lc-chat",
+  "version": "0.0.1",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=12.x"
+  },
+  "scripts": {
+    "lint": "eslint --ext .js src"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1"
+  }
+}

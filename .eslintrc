@@ -1,0 +1,27 @@
+{
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "plugins": [
+    "node",
+    "promise"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:node/recommended"
+  ],
+  "rules": {
+    "arrow-parens": ["error", "as-needed"],
+    "indent": ["error", 2, { "SwitchCase": 1, "MemberExpression": 0 }],
+    "no-constant-condition": ["error", { "checkLoops": false }],
+    "node/no-unpublished-import": ["off"],
+    "no-console": "error",
+    "no-extra-semi": ["error"],
+    "semi": ["error"],
+    "object-curly-spacing": ["error", "always"],
+    "quotes": ["error", "single"],
+    "comma-dangle": ["error", "never"],
+    "node/no-unsupported-features/es-syntax": ["off"]
+  }
+}
