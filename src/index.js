@@ -19,8 +19,21 @@ io.on('connection', socket => {
     console.log('user disconnected');
   });
 
-  socket.on('chat message', msg => {
-    io.emit('chat message', msg);
+  socket.on('chatMessage', msgData => {
+    const room = io.sockets.adapter.rooms[msgData.channelId];
+    if (!room || !room.sockets[socket.id]) {
+      // TODO error this (not in room)
+      console.log('Socket not in channel');
+      return;
+    }
+    io.sockets.in(msgData.channelId).emit('chatMessage', msgData.text);
+  });
+
+  socket.on('joinChannel', channelId => {
+    socket.join(channelId);
+  });
+  socket.on('leaveChannel', channelId => {
+    socket.leave(channelId);
   });
 });
 
