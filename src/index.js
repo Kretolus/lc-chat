@@ -20,13 +20,13 @@ io.on('connection', socket => {
   });
 
   socket.on('chatMessage', msgData => {
-    const room = io.sockets.adapter.rooms[msgData.channelId];
-    if (!room || !room.sockets[socket.id]) {
+    const channel = socket.rooms[msgData.channelId];
+    if (!channel) {
       // TODO error this (not in room)
       console.log('Socket not in channel');
       return;
     }
-    io.sockets.in(msgData.channelId).emit('chatMessage', msgData.text);
+    io.to(msgData.channelId).emit('chatMessage', msgData.text);
   });
 
   socket.on('joinChannel', channelId => {
