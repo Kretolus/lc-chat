@@ -35,10 +35,11 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
-  var socket = io();
+  const socket = io();
+  let activeChannel;
   $('#postMessage').submit(function(e) {
     e.preventDefault(); // prevents page reloading
-    socket.emit('chatMessage', $('#messsageText').val());
+    socket.emit('chatMessage', { channelId: activeChannel, text: $('#messsageText').val() });
     $('#messsageText').val('');
     return false;
   });
@@ -49,7 +50,8 @@
   $('#channelCreate').submit(function(e) {
     e.preventDefault(); // prevents page reloading
     $.post({ url: 'http://localhost:3000/channels', data: JSON.stringify({ name: $('#channelName').val() }), contentType: 'application/json', }, function(channelData) {
-      socket.emit('joinChannel', channelData._id)
+      socket.emit('joinChannel', channelData._id);
+      activeChannel = channelData._id;
     });
     $('#channelName').val('');
     return false;
