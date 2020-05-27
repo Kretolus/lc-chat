@@ -30,9 +30,11 @@ io.on('connection', socket => {
   });
 
   socket.on('joinChannel', channelId => {
+    console.log('User joined channel', channelId);
     socket.join(channelId);
   });
   socket.on('leaveChannel', channelId => {
+    console.log('User left channel', channelId);
     socket.leave(channelId);
   });
 });
